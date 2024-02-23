@@ -1,0 +1,71 @@
+<form (ngSubmit)="sendData()" [formGroup]="dataForm">
+    <ol class="list-group ">
+        <li class="list-group-item  justify-content-between align-items-start" *ngFor="let i of selectedItems">
+            <div class="row ">
+                <div class="fw-bold col-auto me-auto">{{i?.name}} {{i?.price}}$</div>
+            </div>
+            Cantidad: <span class="text-default">{{i?.qty}}</span>
+
+        </li>
+    </ol>
+
+    <div class="mb-3 form-floating form-group col mt-1">
+        <label for="client" class="col-form-label py-1 px-2">Cliente:</label>
+        <input class="form-control" type="text" name="client" [value]="data?.client" disabled>
+    </div>
+    <div class="row">
+        <div class="mb-3 form-floating form-group col mt-1">
+            <label for="methodPayment" class="col-form-label py-1 px-4">Metodo de pago:</label>
+            <input class="form-control" type="text" name="methodPayment" [value]="data?.paymentMethod" disabled>
+        </div>
+        <div class="mb-3 form-floating form-group col mt-1">
+            <label for="pay_code" class="col-form-label py-1 px-4">Referencia de pago:</label>
+            <input class="form-control" type="text" name="pay_code" [value]="data?.pay_code" disabled>
+        </div>
+    </div>
+    @if (!show) {
+    <div class="mb-3 form-floating form-group col mt-1">
+        <label for="delivery_man" class="col-form-label py-1 px-2">Selecciona el repartidor:</label>
+        <select class="form-select" aria-label="Seleccion de Rol" name="delivery_man" id="delivery_man"
+            formControlName="delivery_man">
+            <option selected value="">Selecciona un repartidor</option>
+            <option *ngFor="let delivery_man of deliveryList" [value]="delivery_man.id">{{delivery_man?.firstname}}
+                {{delivery_man?.lastname}}
+            </option>
+        </select>
+        <div *ngIf="dataForm.get('delivery_man')?.touched && dataForm.get('delivery_man')?.errors?.['required']"
+            class="alert mt-3 alert-danger">El repartidor es requerido.</div>
+    </div>
+    }
+
+    <div class="row">
+        <div class="mb-3 mt-1 form-floating form-group col">
+            <label for="price" class="col-form-label py-1 px-4">Precio estimado a pagar por esta venta:</label>
+            <input type="number" class="form-control" [value]="data?.price" id="price" disabled>
+        </div>
+
+        <div class="mb-3 mt-1 form-floating form-group col">
+            <label for="date" class="col-form-label py-1 px-4">Fecha:</label>
+            <input type="text" class="form-control" [value]="data?.date" id="date" disabled>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="mb-3 mt-1 form-floating form-group col">
+            <label for="address" class="col-form-label py-1 px-4">Direccion:</label>
+            <input type="text" class="form-control" [value]="data?.address" id="address" disabled>
+        </div>
+    </div>
+    <span *ngIf="error" class="text-danger px-1">{{error}}</span>
+    <div class="py-2"></div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Cerrar
+        </button>
+
+        <button type="button" class="btn btn-primary" type="submit" [hidden]="show" [disabled]="dataForm.invalid">
+            Editar
+        </button>
+
+    </div>
+</form>

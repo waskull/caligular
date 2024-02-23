@@ -1,0 +1,34 @@
+.td {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dark {
+    background-color: #0E122B;
+    color: white;
+    background: #0E122B;
+}
+
+.ngx-pagination {
+    color: #18609d;
+    padding: 5px !important;
+    font-size: 18px !important;
+    
+}
+
+.ngx-pagination .current,
+.btn-info {
+    background: #0E122B !important;
+    background-color: #18609d;
+    border: transparent !important;
+    border-radius: 20px !important;
+}
+
+.ngx-pagination .current:hover {
+    background: darkblue !important;
+    border-radius: 20px !important;
+    border: transparent !important;
+}
+

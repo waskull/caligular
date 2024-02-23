@@ -1,0 +1,200 @@
+html,
+body {
+  font-family: 'Poppins', sans-serif;
+  height: 100%;
+  margin: 0;
+}
+
+
+
+a.dropdown-item:hover {
+  background-color: red;
+  color: black !important;
+  border-radius: 0;
+  padding:16px;
+}
+
+.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  
+}
+
+
+
+.name{
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.logo {
+  font-family: 'Poppins-Bold', sans-serif;
+}
+
+// .gfg {
+//   height: 50px;
+//   width: 50px;
+
+// }
+
+.mynav {
+  color: #fff;
+}
+
+.sidenav {
+  background-color: #0E122B;
+  max-width: 12%;
+  position: fixed;
+  height: 100%;
+  color: #f8e91e;
+  z-index: 1;
+  overflow: hidden;
+  -webkit-transition: margin .25s ease-out;
+  -moz-transition: margin .25s ease-out;
+  -o-transition: margin .25s ease-out;
+  transition: margin .25s ease-out;
+  margin: 0;
+  padding: 0;
+  left: 0;
+  top: 0;
+  text-overflow: ellipsis;
+}
+
+.link {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#visible {
+  visibility: hidden;
+}
+
+#invisible {
+  visibility: visible;
+}
+
+#invi{
+  display: block;
+}
+#visi{
+  display: hidden;
+}
+
+//700px
+@media screen and (max-width: 580px){
+
+  #visible {
+    visibility: visible;
+  }
+  #invisible {
+    visibility: hidden;
+  }
+  #invi{
+    display: none
+  }
+  #visi{
+    display: block;
+  }
+  #mini {
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+}
+@media screen and (max-width: 1366px) and (max-height: 800px) {
+  .invix{
+    display: none
+  }
+  
+  .dropdown-item{
+    font-size: small;
+  }
+  .mynav{
+    font-size: small;
+  }
+  .name{
+    font-size: small;
+  }
+  .smaller{
+    font-size: smaller;
+  }
+  .small-font{
+    font-size: small;
+  }
+  
+
+  .mynav li a {
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .sidenav{
+    max-width: 15%;
+  }
+  }
+.small-font{
+  font-size: small;
+}
+
+.pading{
+  padding-right: 10px;
+  text-overflow: clip;
+}
+
+// @media screen and (max-width: 450px) {
+
+//   #visible {
+//     visibility: visible;
+//   }
+
+// }
+
+
+
+.mynav li a {
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 8px 6px 8px 11px;
+}
+
+.mynav li a.active {
+  background: rgba(255, 255, 255, 0.2);
+
+}
+
+.mynav li a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  min-width: 100%;
+  
+}
+
+
+.mynav li a i {
+  padding: 8px 6px 8px 11px;
+  text-align: center;
+  position: sticky;
+}
+
+.mynav li{
+  min-width: 100%;
+}
+
+.mynav li.active li:hover{
+  min-width: 100%;
+}
+
+
+// .notification-badge {
+//   background-color: rgba(255, 255, 255, 0.7);
+//   float: right;
+//   color: #222;
+//   font-size: 14px;
+//   padding: 0px 8px;
+//   border-radius: 2px;
+// }

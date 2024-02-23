@@ -1,0 +1,56 @@
+<ng-container>
+    <button type="button" (click)="openFormModal()" class="btn btn-primary">
+        + {{buttonName}}
+    </button>
+    
+    
+    
+        <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="modal" tabindex="-1"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content text-sm-start">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLabel">Crear</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-justify">
+                        <h5 class="mb-3">Introduzca los datos del nuevo registro</h5>
+         
+                            <ng-container *ngIf="userForm">
+                                <userform (emitForm)="emitUser($event)" [userData]="data"></userform>
+                            </ng-container>
+                   
+                        @if (providerForm) {
+                            <ng-container>
+                                <providerform (emitForm)="emitUser($event)" [data]="data"></providerform>
+                            </ng-container>
+                        }
+                        @if (productForm) {
+                            <ng-container>
+                                <productform (emitForm)="emitUser($event)" [data]="data"></productform>
+                            </ng-container>
+                        }
+                        @if (saleForm) {
+                            <ng-container>
+                                <saleform (emitForm)="emitUser($event)" [data]="data"></saleform>
+                            </ng-container>
+                        }
+                        @if (orderForm) {
+                            <ng-container>
+                                <orderform (emitForm)="emitUser($event)" [data]="data"></orderform>
+                            </ng-container>
+                        }
+                        
+                        
+                        
+                        <!-- <ng-container *ngIf="inventoryForm">
+                            <inventoryform (emitForm)="emitUser($event)" [data]="data"></inventoryform>
+                        </ng-container> -->
+                        
+                        
+                </div>
+    
+            </div>
+        </div>
+    </div>
+    </ng-container>

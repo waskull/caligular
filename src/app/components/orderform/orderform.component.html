@@ -1,0 +1,106 @@
+<form (ngSubmit)="sendData()" [formGroup]="dataForm">
+    @if (show) {
+        <h6 class="py-1">Helados comprados:</h6>
+    }
+    <div class="row">
+        @if (!show) {
+        <div class="mb-3 form-floating form-group col">
+            <label for="item" class="col-form-label py-1">Selecciona un artículo:</label>
+            <select class="form-select" #selectList (change)="addItem(selectList.value)" aria-label="Seleccion de Rol"
+                name="item" id="item" formControlName="item">
+                <option selected value="">Selecciona un artículo</option>
+                @for (item of inventoryList; track $index) {
+                <option value="{{ item | json }}">
+                    {{item.item.name}}
+                </option>
+                }
+
+            </select>
+            <div *ngIf="dataForm.get('item')?.touched && dataForm.get('item')?.errors?.['required']"
+                class="alert mt-3 alert-danger">El artículo es requerido.</div>
+        </div>
+        }
+        <!-- <div class="mb-3 form-floating form-group col">
+            <label for="quantity" class="col-form-label py-1">Cantidad:</label>
+            <input type="number" class="form-control" id="quantity" formControlName="quantity">
+            <div *ngIf="dataForm.get('quantity')?.touched && dataForm.get('quantity')?.errors?.['required']"
+                class="alert mt-3 alert-danger">La cantidad es requerida.</div>
+            <div *ngIf="dataForm.get('quantity')?.touched && dataForm.get('quantity')?.errors?.['min']"
+                class="alert mt-3 alert-danger">
+                La cantidad debe de ser mayor o igual a 0.</div>
+        </div> -->
+    </div>
+
+    <ol class="list-group list-group-numbered">
+        <li class="list-group-item d-flex justify-content-between align-items-start" *ngFor="let i of selectedItems">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">{{i.item.name}}</div>
+                Stock actual:
+                <span *ngIf="i.stock === 0" class="text-danger">{{i.stock}}, </span>
+                <span *ngIf="i.stock > 0 && i.stock<5" class="text-warning">{{i.stock}}, </span>
+                <span *ngIf="i.stock > 5" class="text-success">{{i.stock}}, </span>
+                <button class="btn btn-sm btn-warning" type="button" (click)="minus(i)">-</button>
+                Cantidad a agregar: {{i.quantity}}
+                <button class="btn btn-sm btn-primary" type="button" (click)="plus(i)">+</button>
+            </div>
+
+            <span style="cursor: pointer;" (click)="removeItem(i)" class="badge bg-danger rounded-pill">Click Para
+                Eliminar</span>
+        </li>
+    </ol>
+    @if (show) {
+    <ol class="list-group list-group-numbered">
+        <li class="list-group-item d-flex justify-content-between align-items-start" *ngFor="let i of data.ite">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">{{i?.name}}</div>
+                Cantidad:
+                <span class="text-black">{{i?.qty}}, </span>
+            </div>
+        </li>
+    </ol>
+    }
+    <div class="row">
+        <div class="mb-3 mt-1 form-floating form-group col">
+            <label for="price" class="col-form-label py-1 px-4">Total:</label>
+            <input type="number" class="form-control" id="price" formControlName="price">
+            <div *ngIf="dataForm.get('price')?.touched && dataForm.get('price')?.errors?.['required']"
+                class="alert mt-3 alert-danger">El precio es requerida.</div>
+            <div *ngIf="dataForm.get('price')?.touched && dataForm.get('price')?.errors?.['min']"
+                class="alert mt-3 alert-danger">
+                El precio debe de ser mayor a 0.</div>
+        </div>
+    </div>
+    @if (show) {
+    <div class="row">
+        <div class="mb-3 mt-1 form-floating form-group col">
+            <label for="date" class="col-form-label py-1 px-4">Fecha:</label>
+            <input type="text" disabled [value]="data?.date" class="form-control" id="date">
+        </div>
+        <div class="mb-3 mt-1 form-floating form-group col">
+            <label for="salesman" class="col-form-label py-1 px-4">Realizado por:</label>
+            <input type="text" disabled [value]="data?.salesman" class="form-control" id="salesman">
+        </div>
+    </div>
+    
+    }
+
+    <span *ngIf="error" class="text-danger px-1">{{error}}</span>
+    <div class="py-2"></div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Cerrar
+        </button>
+        <ng-container *ngIf="data; else elseTemplate">
+            <!-- <button type="button" class="btn btn-primary" type="submit"
+                [disabled]="dataForm.invalid || selectedItems.length < 1">
+                Editar
+            </button> -->
+        </ng-container>
+        <ng-template #elseTemplate>
+            <button type="button" class="btn btn-primary" type="submit"
+                [disabled]="dataForm.invalid || selectedItems.length < 1">
+                Crear
+            </button>
+        </ng-template>
+    </div>
+</form>

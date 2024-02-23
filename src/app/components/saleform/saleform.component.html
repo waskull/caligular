@@ -1,0 +1,135 @@
+<form (ngSubmit)="sendData()" [formGroup]="dataForm">
+    <div class="row">
+        <div class="mb-3 form-floating form-group col">
+            <label for="item" class="col-form-label py-1 px-4">Selecciona un artículo:</label>
+            <select class="form-select" #selectList (change)="addItem(selectList.value)" aria-label="Seleccion de artículo" name="item" id="item" formControlName="item">
+                <option selected value="">Selecciona un artículo</option>
+                <option *ngFor="let item of inventoryList" value="{{ item | json }}">
+                    {{item.item.name}} {{item.item.price}}$ / {{item.item.wholesale_price}}</option>
+            </select>
+            <div *ngIf="dataForm.get('item')?.touched && dataForm.get('item')?.errors?.['required']"
+                class="alert mt-3 alert-danger">El artículo es requerido.</div>
+        </div>
+        <!-- <div class="mb-3 form-floating form-group col">
+            <label for="quantity" class="col-form-label py-1">Cantidad:</label>
+            <input type="number" class="form-control" id="quantity" formControlName="quantity">
+            <div *ngIf="dataForm.get('quantity')?.touched && dataForm.get('quantity')?.errors?.['required']"
+                class="alert mt-3 alert-danger">La cantidad es requerida.</div>
+            <div *ngIf="dataForm.get('quantity')?.touched && dataForm.get('quantity')?.errors?.['min']"
+                class="alert mt-3 alert-danger">
+                La cantidad debe de ser mayor o igual a 0.</div>
+        </div> -->
+    </div>
+    <ol class="list-group ">
+        <li class="list-group-item  justify-content-between align-items-start" *ngFor="let i of selectedItems">
+
+            <div class="row ">
+                <div class="fw-bold col-auto me-auto">{{i.item.name}} {{i.item.price}}$ / {{i.item.wholesale_price}}</div>
+                <span style="cursor: pointer;" (click)="removeItem(i)"
+                    class="badge bg-danger rounded-pill col-auto">Eliminar</span>
+            </div>
+
+            Stock actual:
+            <span *ngIf="i.stock === 0" class="text-danger">{{i.stock}}, </span>
+            <span *ngIf="i.stock > 0 && i.stock<5" class="text-warning">{{i.stock}}, </span>
+            <span *ngIf="i.stock > 5" class="text-success">{{i.stock}}, </span>
+
+            <button class="btn btn-sm btn-warning" type="button" (click)="minus(i)">-</button>
+            Cantidad a agregar: {{i.quantity}}
+            <button class="btn btn-sm btn-primary" type="button" (click)="plus(i)">+</button>
+
+
+        </li>
+    </ol>
+    <div class="mb-3 form-floating form-group col mt-1">
+        <label for="client" class="col-form-label py-1">Selecciona el cliente:</label>
+        <select class="form-select" aria-label="Seleccion de Rol" name="client" id="client" formControlName="client">
+            <option selected value="">Selecciona un cliente</option>
+            <option *ngFor="let client of clientList" [value]="client.id">{{client.firstname}} {{client.lastname}}
+            </option>
+        </select>
+        <div *ngIf="dataForm.get('client')?.touched && dataForm.get('client')?.errors?.['required']"
+            class="alert mt-3 alert-danger">El cliente es requerido.</div>
+    </div>
+    <div class="row">
+        <div class="mb-3 form-floating form-group col">
+            <label for="address" class="col-form-label py-1  px-4">Dirección:</label>
+            <input type="text" class="form-control" id="address" formControlName="address">
+            <div *ngIf="dataForm.get('address')?.touched && dataForm.get('address')?.errors?.['required']"
+                class="alert mt-3 alert-danger">La dirección es requerida.</div>
+            <div *ngIf="dataForm.get('address')?.touched && dataForm.get('address')?.errors?.['minlength']"
+                class="alert mt-3 alert-danger">La dirección debe de tener mínimo
+                {{dataForm.get('address')?.errors?.['minlength'].requiredLength}} caracteres.</div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="mb-3 form-floating form-group col">
+            <div class="mb-3 form-floating form-group col">
+                <label for="paymentMethod" class="col-form-label py-1">Método de pago:</label>
+                <select class="form-select" (change)="clearCode()" aria-label="Seleccion de Rol" name="paymentMethod" id="paymentMethod" formControlName="paymentMethod">
+                  <option selected value="">Selecciona un método de pago</option>
+                  <option value={{methods.Cash}}>{{methods.Cash}}</option>
+                  <option value={{methods.Mobile}}>{{methods.Mobile}}</option>
+                  <option value={{methods.Transfer}}>{{methods.Transfer}}</option>
+                </select>
+                <div *ngIf="dataForm.get('paymentMethod')?.touched && dataForm.get('paymentMethod')?.errors?.['required']"
+                  class="alert mt-3 alert-danger">El método de pago es requerido.</div>
+              </div>
+        </div>
+        @if (dataForm.value.paymentMethod  !== methods.Cash || "") {
+            <div class="mb-3 form-floating form-group col">
+                <label for="pay_code" class="col-form-label py-1  px-4"
+                    aria-placeholder="Ultimos 4 digitos del codigo de referencia">Código de referencia (últimos 4
+                    digitos):</label>
+                <input type="text" class="form-control" id="pay_code" formControlName="pay_code" maxlength="4">
+                <div class="alert mt-3 alert-danger" *ngIf="dataForm.get('paymentMethod')?.value !== methods?.Cash && dataForm.get('pay_code')?.value?.length !== 4 && dataForm.get('pay_code')?.touched">Debes introducir un codigo de referencia con 4 digitos</div>
+                <div class="alert mt-3 alert-danger" *ngIf="dataForm.get('pay_code')?.hasError('maxlength')">El código debe de tener maximo 4 caracteres</div>
+            </div>
+        }
+    </div>
+
+    @if (selectedItems.length>0) {
+        <div class="row">
+            <div class="mb-3 mt-1 form-floating form-group col">
+                <label for="subtotal" class="col-form-label py-1">Subtotal:</label>
+                <input type="number" class="form-control" [value]="total.toFixed(2)" id="subtotal" disabled>
+            </div>
+            <div class="mb-3 mt-1 form-floating form-group col">
+                @if (total>=60) {
+                    <label for="total" class="col-form-label py-1">Total + Delivery Gratis:</label>
+                    <input type="number" class="form-control" [value]="total.toFixed(2)" id="total" disabled>
+                }
+                @else if (total<60 && total>=30) {
+                    <label for="total" class="col-form-label py-1">Total + 2$ de Delivery:</label>
+                    <input type="number" class="form-control" [value]="(total+2).toFixed(2)" id="total" disabled>
+                }
+                @else {
+                    <label for="total" class="col-form-label py-1">Total + 4$ de Delivery:</label>
+                    <input type="number" class="form-control" [value]="(total+4).toFixed(2)" id="total" disabled>
+                }
+                
+            </div>
+        </div>
+    }
+    <span *ngIf="error" class="text-danger px-1">{{error}}</span>
+    <div class="py-2"></div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Cerrar
+        </button>
+        <ng-container *ngIf="data; else elseTemplate">
+            <button type="button" class="btn btn-primary" type="submit"
+                [disabled]="dataForm.invalid || selectedItems.length < 1">
+                Editar
+            </button>
+        </ng-container>
+        <ng-template #elseTemplate>
+            <button type="button" class="btn btn-primary" type="submit"
+                [disabled]="dataForm.invalid || selectedItems.length < 1">
+                Crear
+            </button>
+        </ng-template>
+    </div>
+</form>

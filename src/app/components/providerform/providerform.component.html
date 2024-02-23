@@ -1,0 +1,71 @@
+<form (ngSubmit)="sendData()" [formGroup]="dataForm">
+    <div class="row">
+        <div class="mb-3 form-floating form-group col">
+            <label for="name" class="col-form-label py-1">Nombre:</label>
+            <input type="text" class="form-control" id="name" formControlName="name">
+            <div *ngIf="dataForm.get('name')?.touched && dataForm.get('name')?.errors?.['required']"
+                class="alert mt-3 alert-danger">El nombre es requerido.</div>
+            <div *ngIf="dataForm.get('name')?.touched && dataForm.get('name')?.errors?.['minlength']"
+                class="alert mt-3 alert-danger">El nombre debe de tener minimo
+                {{dataForm.get('name')?.errors?.['minlength'].requiredLength}} caracteres.</div>
+        </div>
+        <div class="mb-3 form-floating form-group col">
+            <label for="address" class="col-form-label py-1">Direccion:</label>
+            <input type="text" class="form-control" id="address" formControlName="address">
+            <div *ngIf="dataForm.get('address')?.touched && dataForm.get('address')?.errors?.['required']"
+                class="alert mt-3 alert-danger">La Direccion es requerida.</div>
+            <div *ngIf="dataForm.get('address')?.touched && dataForm.get('address')?.errors?.['minlength']"
+                class="alert mt-3 alert-danger">La Direccion debe de tener minimo
+                {{dataForm.get('address')?.errors?.['minlength'].requiredLength}} caracteres.</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mb-3 form-floating form-group col">
+            <label for="email" class="col-form-label py-1">Correo:</label>
+            <input type="text" class="form-control" id="email" formControlName="email"
+                [attr.disabled]="editing ? '' : null">
+            <div *ngIf="dataForm.get('email')?.touched && dataForm.get('email')?.errors?.['required']"
+                class="alert mt-3 alert-danger">El Correo es requerido.</div>
+            <div *ngIf="dataForm.get('email')?.touched && dataForm.get('email')?.errors?.['minlength']"
+                class="alert mt-3 alert-danger">El Correo debe de tener minimo
+                {{dataForm.get('email')?.errors?.['minlength'].requiredLength}} caracteres.</div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="mb-3 form-floating form-group col">
+            <label for="phone" class="col-form-label py-1">Telefono:</label>
+            <input type="text" class="form-control" id="phone" formControlName="phone">
+            <div *ngIf="dataForm.get('phone')?.touched && dataForm.get('phone')?.errors?.['required']"
+                class="alert mt-3 alert-danger">El telefono es requerido.</div>
+            <div *ngIf="dataForm.get('phone')?.touched && dataForm.get('phone')?.errors?.['minlength']"
+                class="alert mt-3 alert-danger">El telefono debe de tener minimo
+                {{dataForm.get('phone')?.errors?.['minlength'].requiredLength}} caracteres.</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="mb-3 form-floating form-group col">
+            <label for="phone2" class="col-form-label py-1">Telefono secundario:</label>
+            <input type="text" class="form-control" id="phone2" formControlName="phone2">
+        </div>
+    </div>
+    <span *ngIf="error" class="text-danger px-1">{{error}}</span>
+    <div class="py-2"></div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Cerrar
+        </button>
+        <ng-container *ngIf="data; else elseTemplate">
+            <button type="button" class="btn btn-primary" type="submit" [disabled]="dataForm.invalid">
+                Editar
+            </button>
+        </ng-container>
+        <ng-template #elseTemplate>
+            <button type="button" class="btn btn-primary" type="submit" [disabled]="dataForm.invalid">
+                Crear
+            </button>
+        </ng-template>
+
+
+    </div>
+</form>

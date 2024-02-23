@@ -1,0 +1,95 @@
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 sidenav ">
+            <div class="d-flex flex-column align-items-start align-items-sm-start px-2 pt-2 text-white">
+                <a style="cursor: pointer;" routerLink="/dashboard"
+                    class=" d-flex align-items-start pb-3 text-center align-self-center mb-md-0 me-md-auto text-white text-decoration-none">
+                    <i class="fa-solid fa-c text-center align-self-center text-yellow" id="visible"></i>
+
+                    <span
+                        class="fs-5 d-none d-sm-inline text-center text-yellow align-self-sm-center align-items-sm-center align-content-center justify-content-center"
+                        style="font-family: 'Poppins-Bold';">Helados Cali Maturín</span>
+                </a>
+
+                <ul class="nav mynav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+                    id="menu">
+                    @if (rol === 'vendedor') {
+                    @for (data of navData2; track $index) {
+                    <li id="mini" class=" flex " style="margin-bottom: 10px;" routerLinkActive="active">
+                        <a id="mini" class="nav-link px-0 mynav" routerLink="{{data.routeLink}}"><i
+                                class="{{data.icon}} text-yellow" id="mini"></i><span
+                                class="d-none d-sm-inline ms-1">{{data.label}}</span></a>
+                    </li>
+                    }
+                    }
+                    @else {
+                    @for (data of navData; track $index) {
+                    <li id="mini" class=" flex " style="margin-bottom: 10px;" routerLinkActive="active">
+                        <a id="mini" class="nav-link px-0 mynav" routerLink="{{data.routeLink}}"><i
+                                class="{{data.icon}} text-yellow" id="mini"></i><span
+                                class="d-none d-sm-inline ms-1">{{data.label}}</span></a>
+                    </li>
+                    }
+                    }
+
+                    <li class="">
+                        <span id="invi">
+                            <h6 class="mt-1 mb-0">
+                                <div class="dropdown pb-4 text-center"
+                                    style="cursor: pointer;position: absolute;bottom:0;">
+                                    <a class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                                        id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="../../../assets/images/logo.png" alt="hugenerd" width="30" height="30"
+                                            class="rounded-circle img-fluid invix">
+                                        <span class="d-none d-sm-inline mx-1 name">{{getUserFullaname()}}</span>
+
+                                    </a>
+                                    @if (rol === 'admin') {
+                                    <span class=" small-font smaller"><i class="text-yellow"></i>Administrador</span>
+                                    }
+                                    @else {
+                                    <span class="small-font smaller" style="text-overflow: ellipsis;"><i
+                                            class="text-yellow"></i>{{rol?.toUpperCase() }}</span>
+                                    }
+                                    <ul class="align-content-end dropdown-menu dropdown-menu-dark text-small shadow"
+                                        aria-labelledby="dropdownUser1">
+                                        <li><a class="dropdown-item" style="text-decoration: none;border-radius: 0;"
+                                                routerLink="edituser">Editar Perfil</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li style="background-color: red;"><a class="dropdown-item" (click)="logout"
+                                                style="text-decoration: none;border-radius: 0;"
+                                                (click)="logout()">Cerrar Sesión</a></li>
+                                    </ul>
+
+
+                                </div>
+
+                    <li id="invi">
+
+                    </li>
+
+                    </h6>
+
+                    </span>
+
+                    </li>
+
+
+                </ul>
+
+                <ul id="visible"
+                    class="nav mynav text-center align-self-center nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start">
+
+                    <li class="w-100">
+
+                        <a class="nav-link px-0 mynav" style="text-decoration: none;" (click)="logout()"><i
+                                class="fa-solid fa-xmark text-white bg-danger"></i><span
+                                class="d-none d-sm-inline p-1">Logout</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

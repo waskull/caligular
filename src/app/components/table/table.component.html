@@ -1,0 +1,207 @@
+@if (!hideSearch) {
+<div class="form-group mt-2 container-fluid ">
+    <input type="text" class="form-control" name="search" placeholder="Buscar..." [(ngModel)]="search">
+</div>
+}
+<div class="table-responsive" id="tablee">
+    <table class="table table-hover table-nowrap">
+        <thead class="thead-light ">
+            <ng-container *ngIf="rowData.length > 0; else NODATA">
+                <tr>
+                    
+                    @for (name of colNames; track $index) {
+                        @if (name==='idd') {
+                            <th scope="col" style="display:none;">{{name | uppercase}}</th>
+                        }
+                        @else {
+                            <th scope="col">{{name | uppercase}}</th>
+                        }
+                    }
+                    <th *ngIf="operations.delete || operations.edit"></th>
+                </tr>
+            </ng-container>
+            <ng-template #NODATA>
+                <th class="text-center"></th>
+            </ng-template>
+
+        </thead>
+        <tbody>
+            <ng-container *ngIf="rowData.length > 0; else noData">
+                <tr *ngFor="let row of rowData | filter: search | paginate: { itemsPerPage: 10, currentPage: p}">
+                    @for (name of columns; track $index) {
+                        @if (name==='idd') {
+                            <td style="display:none;">#{{[row[name]]}}</td>
+                        }
+                        @else {
+                            <td class="td" [ngClass]="name==='status' ? getStyle(row[name]) : 'table-default'"
+                        >{{[row[name]]}}
+                        @if (name==='status' && row['status']===status.INCOMPLETE) {
+                        <div class="row">
+                            <button type="button" (click)="open(-row.id)"
+                                class="btn btn-sm btn-square btn-neutral col-6 text-info text-info-hover">
+                                <i class="fa-regular fa-pen-to-square"></i>Aprobar
+                            </button>
+                            <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" [id]="-row.id"
+                                tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content text-sm-start">
+                                        <div class="modal-header">
+                                            <h3 class="modal-title" id="exampleModalLabel">CONFIRMAR PEDIDO</h3>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body text-justify">
+                                            <h5 class="mb-3">Confirmar pago y asignacion de repartidor</h5>
+                                            <editsaleform (emitForm)="edit($event)" [data]="row"></editsaleform>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" (click)="cancel(row.id)"
+                                class="btn btn-sm btn-square btn-neutral col-6 text-danger text-danger-hover">
+                                <i class="fa-regular fa-pen-to-square"></i>Rechazar
+                            </button>
+                        </div>
+
+                        }
+                        @if(name==='status' && row['status']===status.WAITING){
+                        <div class="row">
+                            <div class="col text-center">
+                                <button type="button" (click)="confirm(row.id,row.delivery_man_id)"
+                                    class="btn btn-sm btn-square btn-sucesss col-6 text-success text-success-hover">
+                                    <i class="fa-solid fa-truck"></i>Confirmar entrega
+                                </button>
+                            </div>
+                        </div>
+                        }
+                    </td>
+                        }
+                    }
+                    
+                    <td *ngIf="operations.delete || operations.edit || operations.show || report" class="text-end">
+                        <ng-container *ngIf="operations.edit || operations.show && !isVendedor">
+
+                            @if (operations.show) {
+                            <button type="button" (click)="open(row.id)"
+                                class="btn btn-sm btn-square btn-neutral text-info text-success-hover">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                            }
+                            @else if (operations.edit) {
+                            <button type="button" (click)="open(row.id)"
+                                class="btn btn-sm btn-square btn-neutral text-warning text-success-hover">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </button>
+                            }
+
+
+
+
+                            <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" [id]="row.id"
+                                tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content text-sm-start">
+                                        <div class="modal-header">
+                                            @if (operations.edit) {
+                                            <h3 class="modal-title" id="exampleModalLabel">Editar</h3>
+                                            }
+                                            @else if (operations.show) {
+                                            <h3 class="modal-title" id="exampleModalLabel">Registro #{{row.id}}</h3>
+                                            }
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body text-justify">
+                                            @if (operations.edit) {
+                                            <h5 class="mb-3">Edite los datos del nuevo registro</h5>
+                                            }
+                                            @else if (operations.show) {
+                                            <!-- <h5 class="mb-3">  </h5> -->
+                                            }
+
+                                            @if (userModal) {
+                                            <ng-container>
+                                                <userform (editUser)="edit($event)" [userData]="row"></userform>
+                                            </ng-container>
+                                            }
+
+                                            @if (providerModal) {
+                                            <ng-container>
+                                                <providerform (emitForm)="edit($event)" [data]="row"> </providerform>
+                                            </ng-container>
+                                            }
+
+                                            @if (productModal) {
+                                            <ng-container>
+                                                <productform (emitForm)="edit($event)" [data]="row"></productform>
+                                            </ng-container>
+                                            }
+
+                                            @if (orderModal) {
+                                            <ng-container>
+                                                <orderform (emitForm)="edit($event)" [show]="operations.show"
+                                                    [data]="row"></orderform>
+                                            </ng-container>
+                                            }
+
+                                            @if (saleModal) {
+                                            <ng-container>
+                                                <h5 class="mb-3">Datos del pedido:</h5>
+                                                <editsaleform (emitForm)="edit($event)" [show]="operations.show"
+                                                    [data]="row"></editsaleform>
+                                                <!-- <saleform (emitForm)="edit($event)" [data]="row"></saleform> -->
+                                            </ng-container>
+                                            }
+
+
+
+
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <button *ngIf="operations.delete && !isVendedor" type="button"
+                            class="btn btn-sm btn-square btn-neutral text-danger text-danger-hover mx-1"
+                            (click)="delete(row)"> <i class="fa-solid fa-xmark"></i></button>
+                        <ng-container *ngIf="saleModal && report">
+                            <reportgenerator [isSale]="true" [id]="row.id"></reportgenerator>
+                        </ng-container>
+                        <ng-container *ngIf="orderModal && report">
+                            <reportgenerator [isPurchase]="true" [id]="row.id"></reportgenerator>
+                        </ng-container>
+                        <!-- <ng-container *ngIf="billModal && report">
+                            <reportgenerator [isBill]="true" [data]="row"></reportgenerator>
+                        </ng-container> -->
+
+
+                    </td>
+                </tr>
+            </ng-container>
+            <ng-template #noData>
+                <tr>
+                    <td class="text-center">No Hay Registros</td>
+                </tr>
+            </ng-template>
+
+
+        </tbody>
+    </table>
+</div>
+
+<div class="card-footer border-0 ">
+    <div class="text-center">
+        <pagination-controls (pageChange)="p = $event" [autoHide]="true" [directionLinks]="true" [responsive]="true"
+            previousLabel="Anterior" nextLabel="Siguiente" screenReaderPaginationLabel="Paginación"
+            screenReaderPageLabel="pagina" screenReaderCurrentLabel="Estas en la pagina"
+            class="ngx-pagination"></pagination-controls>
+    </div>
+    <div class="text-right">
+        <strong *ngIf="rowData.length > 0" class="font-weight-bold text-muted">Mostrando {{rowData.length}}
+            registros.</strong>
+    </div>
+</div>
