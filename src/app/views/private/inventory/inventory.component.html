@@ -1,0 +1,15 @@
+<app-header title="Inventario"></app-header>
+
+<main class="py-6 bg-surface-secondary">
+    <div class="container-fluid mb-lg-2">
+       
+
+        <div class="card mt-lg-3 border-0 mb-7">
+           <!-- <app-modal [inventoryForm]="true" modalId="modal" (emitData)="newValue($event)" class="col text-sm-end"></app-modal> -->
+            <app-table [colNames]="columnNames" [columns]="columns" [inventoryModal]="true"  [rowData]="inventoryList" [operations]="op" (onEdit)="edit($event)"></app-table>
+
+        </div>
+    </div>
+
+
+</main>
