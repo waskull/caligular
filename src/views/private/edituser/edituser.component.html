@@ -1,0 +1,91 @@
+
+<div class="container d-flex vh-100 justify-content-md-center align-items-center">
+    <div>
+        <h2 class="text-dark mb-2">Editar mi <span class="text-primary">Usuario</span></h2>
+        <div class="">
+            <form (ngSubmit)="sendData()" [formGroup]="userForm">
+                <div class="row">
+                  <div class="mb-3 form-floating form-group col">
+                    <label for="firstname" class="col-form-label py-1  px-4">Nombre:</label>
+                    <input type="text" class="form-control" id="firstname" formControlName="firstname" maxlength="40">
+                    <div *ngIf="userForm.get('firstname')?.touched && userForm.get('firstname')?.errors?.['required']"
+                      class="alert mt-3 alert-danger">El nombre es requerido.</div>
+                    <div *ngIf="userForm.get('firstname')?.touched && userForm.get('firstname')?.errors?.['minlength']"
+                      class="alert mt-3 alert-danger">El nombre debe de tener mínimo
+                      {{userForm.get('firstname')?.errors?.['minlength'].requiredLength}} caracteres.</div>
+                  </div>
+                  <div class="mb-3 form-floating form-group col">
+                    <label for="lastname" class="col-form-label py-1 px-4">Apellido:</label>
+                    <input type="text" class="form-control" id="lastname" formControlName="lastname" maxlength="40">
+                    <div *ngIf="userForm.get('lastname')?.touched && userForm.get('lastname')?.errors?.['required']"
+                      class="alert mt-3 alert-danger">El apellido es requerido.</div>
+                    <div *ngIf="userForm.get('lastname')?.touched && userForm.get('lastname')?.errors?.['minlength']"
+                      class="alert mt-3 alert-danger">El apellido debe de tener mínimo
+                      {{userForm.get('lastname')?.errors?.['minlength'].requiredLength}} caracteres.</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="mb-3 form-floating form-group col">
+                    <label for="pass" class="col-form-label py-1 px-4">Contraseña:</label>
+                    <input type="password" class="form-control" id="pass" formControlName="pass" maxlength="40">
+                    <div *ngIf="userForm.get('pass')?.touched && userForm.get('pass')?.errors?.['required']"
+                      class="alert mt-3 alert-danger">La Contraseña es requerida.</div>
+                    <div *ngIf="userForm.get('pass')?.touched && userForm.get('pass')?.errors?.['minlength']"
+                      class="alert mt-3 alert-danger">La contraseña debe de tener mínimo
+                      {{userForm.get('pass')?.errors?.['minlength'].requiredLength}} caracteres.</div>
+                  </div>
+                  <div class="mb-3 form-floating form-group col">
+                    <label for="pass2" class="col-form-label py-1 px-4">Confirmar contraseña:</label>
+                    <input type="password" class="form-control" id="pass" formControlName="pass2" maxlength="40">
+                    <div *ngIf="userForm.get('pass2')?.touched && userForm.get('pass2')?.errors?.['required']"
+                      class="alert mt-3 alert-danger">La Contraseña es requerida.</div>
+                    <div *ngIf="userForm.get('pass2')?.touched && userForm.get('pass2')?.errors?.['minlength']"
+                      class="alert mt-3 alert-danger">La contraseña debe de tener mínimo
+                      {{userForm.get('pass')?.errors?.['minlength'].requiredLength}} caracteres.</div>
+                      <div *ngIf="userForm.get('pass2')?.touched && userForm.get('pass2').value !== userForm.get('pass').value"
+                      class="alert mt-3 alert-danger">Ambas contraseñas deben de ser iguales.</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="mb-3 form-floating form-group col">
+                    <label for="cedula" class="col-form-label py-1 px-4">Cédula:</label>
+                    <input type="text" class="form-control" id="cedula" formControlName="cedula" maxlength="40" appOnlynumbers>
+                    <div *ngIf="userForm.get('cedula')?.touched && userForm.get('cedula')?.errors?.['required']"
+                      class="alert mt-3 alert-danger">La cédula es requerida.</div>
+                    <div *ngIf="userForm.get('cedula')?.touched && userForm.get('cedula')?.errors?.['minlength']"
+                      class="alert mt-3 alert-danger">La cédula debe de tener mínimo
+                      {{userForm.get('cedula')?.errors?.['minlength'].requiredLength}} caracteres.</div>
+                  </div>
+                  <div class="mb-3 form-floating form-group col">
+                    <label for="birthdate" class="col-form-label py-1 px-4">Fecha de nacimiento:</label>
+                    <input type="date" class="form-control" id="birthdate" formControlName="birthdate">
+                    <div *ngIf="userForm.get('birthdate')?.touched && userForm.get('birthdate')?.errors?.['required']"
+                      class="alert mt-3 alert-danger">Introduce una fecha de nacimiento válida.</div>
+              
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="mb-3 form-floating form-group col">
+                    <label for="phone" class="col-form-label py-1 px-4">Teléfono:</label>
+                    <input type="text" class="form-control" id="phone" formControlName="phone" maxlength="40" appOnlynumbers>
+                    <div *ngIf="userForm.get('phone')?.touched && userForm.get('phone')?.errors?.['minlength']"
+                      class="alert mt-3 alert-danger">El teléfono debe de tener mínimo
+                      {{userForm.get('phone')?.errors?.['minlength'].requiredLength}} caracteres.</div>
+                  </div>
+                </div>
+                <span *ngIf="error" class="text-danger px-1">{{error}}</span>
+                <div class="py-2"></div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger me-2" (click)="cancel()" routerLink="dashboard">
+                    Cancelar
+                  </button>
+                    <button type="button" class="btn btn-primary" type="submit" [disabled]="userForm.invalid || userForm.get('pass2').value !== userForm.get('pass').value">
+                      Editar Usuario
+                    </button>
+                  
+                  
+                </div>
+              </form>
+        </div>
+    </div>
+</div>

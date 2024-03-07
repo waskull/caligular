@@ -1,0 +1,15 @@
+<app-header title="Proveedores"></app-header>
+
+<main class="py-6 bg-surface-secondary">
+    <div class="container-fluid mb-lg-2">
+       
+
+        <div class="card mt-lg-3 border-0 mb-7">
+            <app-modal [providerForm]="true" modalId="modal" (emitData)="newValue($event)" class="col text-sm-end"></app-modal>
+            <app-table [colNames]="columnNames" [columns]="columns" [providerModal]="true" [rowData]="providerList" [operations]="op" (onEdit)="edit($event)" (onDelete)="delete($event)"></app-table>
+
+        </div>
+    </div>
+
+
+</main>
