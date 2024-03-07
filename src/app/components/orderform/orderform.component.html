@@ -62,9 +62,9 @@
     <div class="row">
         <div class="mb-3 mt-1 form-floating form-group col">
             <label for="price" class="col-form-label py-1 px-4">Total:</label>
-            <input type="number" class="form-control" id="price" formControlName="price">
+            <input type="text" class="form-control" id="price" formControlName="price" decimalDirective>
             <div *ngIf="dataForm.get('price')?.touched && dataForm.get('price')?.errors?.['required']"
-                class="alert mt-3 alert-danger">El precio es requerida.</div>
+                class="alert mt-3 alert-danger">El precio es requerido.</div>
             <div *ngIf="dataForm.get('price')?.touched && dataForm.get('price')?.errors?.['min']"
                 class="alert mt-3 alert-danger">
                 El precio debe de ser mayor a 0.</div>

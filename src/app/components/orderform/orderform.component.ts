@@ -4,11 +4,12 @@ import { catchError, throwError } from 'rxjs';
 import { InventoryService } from '../../services/inventory.service';
 import { OrderService } from '../../services/order.service';
 import { CommonModule } from '@angular/common';
+import { DecimalsOnlyDirective } from '../../decimalsdirective.directive';
 
 @Component({
   selector: 'orderform',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, DecimalsOnlyDirective],
   templateUrl: './orderform.component.html',
   styleUrl: './orderform.component.scss'
 })
@@ -101,7 +102,7 @@ export class OrderformComponent implements OnInit {
       });
     });
     let Data: any = {
-      price: this.dataForm.value.price,
+      price: parseInt(this.dataForm.value.price),
       items: tmpList
     };
 
@@ -116,6 +117,8 @@ export class OrderformComponent implements OnInit {
     ).subscribe(res => {
       this.error = '';
       this.emitForm.emit(Data);
+      this.dataForm.reset();
+      this.selectedItems = [];
     });
 
   }

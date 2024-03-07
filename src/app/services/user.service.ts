@@ -24,6 +24,10 @@ export class UserService {
     return this.httpClient.patch<any>(`${this.baseURL}/user/${id}`, user);
   }
 
+  public updateUser(user: User, id: number) {
+    return this.httpClient.patch<any>(`${this.baseURL}/user/edit/${id}`, user);
+  }
+
   public delete(user: number) {
     return this.httpClient.delete<any>(`${this.baseURL}/user/${user}`);
   }

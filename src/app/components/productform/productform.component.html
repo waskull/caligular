@@ -2,7 +2,7 @@
     <div class="row">
       <div class="mb-3 form-floating form-group col">
         <label for="name" class="col-form-label py-1  px-4">Nombre:</label>
-        <input type="text" class="form-control" id="name" formControlName="name">
+        <input type="text" class="form-control" id="name" formControlName="name" maxlength="80">
         <div *ngIf="dataForm.get('name')?.touched && dataForm.get('name')?.errors?.['required']"
           class="alert mt-3 alert-danger">El nombre es requerido.</div>
         <div *ngIf="dataForm.get('name')?.touched && dataForm.get('name')?.errors?.['minlength']"
@@ -13,7 +13,7 @@
     <div class="row">
       <div class="mb-3 form-floating form-group col">
         <label for="desc" class="col-form-label py-1  px-4">Descripción:</label>
-        <input type="text" class="form-control" id="desc" formControlName="desc">
+        <input type="text" class="form-control" id="desc" formControlName="desc" maxlength="150">
         <div *ngIf="dataForm.get('desc')?.touched && dataForm.get('desc')?.errors?.['required']"
           class="alert mt-3 alert-danger">La descripción es requerida.</div>
         <div *ngIf="dataForm.get('desc')?.touched && dataForm.get('desc')?.errors?.['minlength']"
@@ -24,7 +24,7 @@
     <div class="row">
       <div class="mb-3 form-floating form-group col">
         <label for="price" class="col-form-label py-1  px-4">Precio al detal:</label>
-        <input type="number" class="form-control" id="price" formControlName="price"> 
+        <input type="number" class="form-control" id="price" formControlName="price" decimalDirective> 
         <div *ngIf="dataForm.get('price')?.touched && dataForm.get('price')?.errors?.['required']"
           class="alert mt-3 alert-danger">El precio al detal es requerido.</div>
         <div *ngIf="dataForm.get('price')?.touched && dataForm.get('price')?.errors?.['min']"
@@ -33,7 +33,7 @@
       </div>
       <div class="mb-3 form-floating form-group col">
         <label for="wholesale_price" class="col-form-label py-1  px-4">Precio al mayor:</label>
-        <input type="number" class="form-control" id="wholesale_price" formControlName="wholesale_price"> 
+        <input type="number" class="form-control" id="wholesale_price" formControlName="wholesale_price" decimalDirective> 
         <div *ngIf="dataForm.get('wholesale_price')?.touched && dataForm.get('wholesale_price')?.errors?.['required']"
           class="alert mt-3 alert-danger">El precio al mayor es requerido.</div>
         <div *ngIf="dataForm.get('wholesale_price')?.touched && dataForm.get('wholesale_price')?.errors?.['min']"
@@ -44,14 +44,20 @@
     <div class="form-group fit container">
       <input type="file" accept="image/*" (change)="showPreview($event)" />
       <!-- Image Preview -->
-      <div class="imagePreview col-md-4px-0" *ngIf="imageURL && imageURL !== ''">
-        <img [src]="imageURL" [alt]="dataForm.value.name" class="img-fluid">
+      <div class="imagePreview col-md-4 px-0" *ngIf="imageURL && imageURL !== ''">
+        <img [src]="imageURL" [alt]="" class="img-fluid">
       </div>
+      @if (editing && baseURL !== '' && imageURL === '' || !imageURL) {
+          <div class="imagePreview col-md-4 px-0">
+            <img [src]="baseURL" [alt]="" class="img-fluid">
+          </div>
+      }
     </div>
+    
     <span *ngIf="error" class="text-danger px-1">{{error}}</span>
     <div class="py-2"></div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeModal()">
         Cerrar
       </button>
       <ng-container *ngIf="data; else elseTemplate">

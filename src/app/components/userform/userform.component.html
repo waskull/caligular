@@ -2,7 +2,7 @@
     <div class="row">
       <div class="mb-3 form-floating form-group col">
         <label for="firstname" class="col-form-label py-1 px-4">Nombre:</label>
-        <input type="text" class="form-control" id="firstname" formControlName="firstname">
+        <input type="text" class="form-control" id="firstname" formControlName="firstname" maxlength="40">
         <div *ngIf="userForm.get('firstname')?.touched && userForm.get('firstname')?.errors?.['required']"
           class="alert mt-3 alert-danger">El nombre es requerido.</div>
         <div *ngIf="userForm.get('firstname')?.touched && userForm.get('firstname')?.errors?.['minlength']"
@@ -11,7 +11,7 @@
       </div>
       <div class="mb-3 form-floating form-group col">
         <label for="lastname" class="col-form-label py-1 px-4">Apellido:</label>
-        <input type="text" class="form-control" id="lastname" formControlName="lastname">
+        <input type="text" class="form-control" id="lastname" formControlName="lastname" maxlength="40">
         <div *ngIf="userForm.get('lastname')?.touched && userForm.get('lastname')?.errors?.['required']"
           class="alert mt-3 alert-danger">El apellido es requerido.</div>
         <div *ngIf="userForm.get('lastname')?.touched && userForm.get('lastname')?.errors?.['minlength']"
@@ -22,7 +22,7 @@
     <div class="row">
       <div class="mb-3 form-floating form-group col">
         <label for="email" class="col-form-label py-1 px-4">Correo:</label>
-        <input type="text" class="form-control" id="email" formControlName="email" [attr.disabled]="editing ? '' : null">
+        <input type="text" class="form-control" id="email" formControlName="email" [attr.disabled]="editing ? '' : null" maxlength="50">
         <div *ngIf="userForm.get('email')?.touched && userForm.get('email')?.errors?.['required']"
           class="alert mt-3 alert-danger">El Correo es requerido.</div>
         <div *ngIf="userForm.get('email')?.touched && userForm.get('email')?.errors?.['minlength']"
@@ -31,7 +31,7 @@
       </div>
       <div class="mb-3 form-floating form-group col">
         <label for="password" class="col-form-label py-1 px-4">Contraseña:</label>
-        <input type="password" class="form-control" id="password" formControlName="password">
+        <input type="password" class="form-control" id="password" formControlName="password" maxlength="40">
         <div *ngIf="userForm.get('password')?.touched && userForm.get('password')?.errors?.['required']"
           class="alert mt-3 alert-danger">La Contraseña es requerida.</div>
         <div *ngIf="userForm.get('password')?.touched && userForm.get('password')?.errors?.['minlength']"
@@ -42,7 +42,7 @@
     <div class="row">
       <div class="mb-3 form-floating form-group col">
         <label for="cedula" class="col-form-label py-1 px-4">Cédula:</label>
-        <input type="text" class="form-control" id="cedula" formControlName="cedula">
+        <input type="text" class="form-control" id="cedula" formControlName="cedula" maxlength="40" appOnlynumbers>
         <div *ngIf="userForm.get('cedula')?.touched && userForm.get('cedula')?.errors?.['required']"
           class="alert mt-3 alert-danger">La cédula es requerida.</div>
         <div *ngIf="userForm.get('cedula')?.touched && userForm.get('cedula')?.errors?.['minlength']"
@@ -53,13 +53,13 @@
         <label for="birthdate" class="col-form-label py-1 px-4">Fecha de nacimiento:</label>
         <input type="date" class="form-control" id="birthdate" formControlName="birthdate">
         <div *ngIf="userForm.get('birthdate')?.touched && userForm.get('birthdate')?.errors?.['required']"
-          class="alert mt-3 alert-danger">La Fecha de nacimiento es requerida.</div>
+          class="alert mt-3 alert-danger">Introduce una fecha de nacimiento válida.</div>
       </div>
     </div>
     <div class="row">
       <div class="mb-3 form-floating form-group col">
         <label for="phone" class="col-form-label py-1 px-4">Teléfono:</label>
-        <input type="text" class="form-control" id="phone" formControlName="phone">
+        <input type="text" class="form-control" id="phone" formControlName="phone" maxlength="40" inputmode="numeric" pattern="[0-9]*" appOnlynumbers>
         <div *ngIf="userForm.get('phone')?.touched && userForm.get('phone')?.errors?.['minlength']"
           class="alert mt-3 alert-danger">El teléfono debe de tener minimo
           {{userForm.get('phone')?.errors?.['minlength'].requiredLength}} caracteres.</div>
@@ -67,10 +67,10 @@
       <div class="mb-3 form-floating form-group col">
         <label for="roles" class="col-form-label py-1 px-4">Rol:</label>
         <select class="form-select" aria-label="Seleccion de Rol" name="roles" id="roles" formControlName="roles">
+          <option selected value="cliente">Cliente</option>
           <option value="gerente">Gerente</option>
-          <option value="vendedor">Vendedor</option>
-          <option value="cliente">Cliente</option>
           <option value="repartidor">Repartidor</option>
+          <option value="vendedor">Vendedor</option>
         </select>
         <div *ngIf="userForm.get('roles')?.touched && userForm.get('roles')?.errors?.['required']"
           class="alert mt-3 alert-danger">El rol es requerido.</div>

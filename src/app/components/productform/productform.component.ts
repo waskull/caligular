@@ -3,11 +3,13 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { catchError, throwError } from 'rxjs';
 import { ProductService } from '../../services/product.service';
 import { CommonModule } from '@angular/common';
+import { DecimalsOnlyDirective } from '../../decimalsdirective.directive';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'productform',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, DecimalsOnlyDirective],
   templateUrl: './productform.component.html',
   styleUrl: './productform.component.scss'
 })
@@ -16,6 +18,7 @@ export class ProductformComponent implements OnInit {
   @Input() data!: any;
   dataForm!: FormGroup;
   imageURL!: string;
+  baseURL = environment.baseURL;
   editing: boolean = false;
   error: string = '';
   productService = inject(ProductService);
@@ -36,6 +39,7 @@ export class ProductformComponent implements OnInit {
     if (this.data) {
       this.editing = true;
       d.patchValue(this.data);
+      this.baseURL = `${this.baseURL}${this.data.image}`;
     }
     return d;
   }
@@ -53,12 +57,16 @@ export class ProductformComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
+  closeModal(){
+    this.imageURL = '';
+  }
+
   sendData() {
     let Data: any = {
       name: this.dataForm.value.name,
-      price: this.dataForm.value.price,
+      price: parseFloat(this.dataForm.value.price),
       image: this.dataForm.value.image,
-      wholesale_price: this.dataForm.value.wholesale_price,
+      wholesale_price: parseFloat(this.dataForm.value.wholesale_price),
       desc: this.dataForm.value.desc
     };
     const formData = new FormData();

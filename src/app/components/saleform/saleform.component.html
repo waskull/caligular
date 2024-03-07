@@ -83,7 +83,7 @@
                 <label for="pay_code" class="col-form-label py-1  px-4"
                     aria-placeholder="Ultimos 4 digitos del codigo de referencia">Código de referencia (últimos 4
                     digitos):</label>
-                <input type="text" class="form-control" id="pay_code" formControlName="pay_code" maxlength="4">
+                <input type="text" class="form-control" id="pay_code" formControlName="pay_code" maxlength="4" appOnlynumbers>
                 <div class="alert mt-3 alert-danger" *ngIf="dataForm.get('paymentMethod')?.value !== methods?.Cash && dataForm.get('pay_code')?.value?.length !== 4 && dataForm.get('pay_code')?.touched">Debes introducir un codigo de referencia con 4 digitos</div>
                 <div class="alert mt-3 alert-danger" *ngIf="dataForm.get('pay_code')?.hasError('maxlength')">El código debe de tener maximo 4 caracteres</div>
             </div>
@@ -93,20 +93,20 @@
     @if (selectedItems.length>0) {
         <div class="row">
             <div class="mb-3 mt-1 form-floating form-group col">
-                <label for="subtotal" class="col-form-label py-1">Subtotal:</label>
+                <label for="subtotal" class="col-form-label py-1 px-4">Subtotal:</label>
                 <input type="number" class="form-control" [value]="total.toFixed(2)" id="subtotal" disabled>
             </div>
             <div class="mb-3 mt-1 form-floating form-group col">
                 @if (total>=60) {
-                    <label for="total" class="col-form-label py-1">Total + Delivery Gratis:</label>
+                    <label for="total" class="col-form-label py-1 px-4">Total + Delivery Gratis:</label>
                     <input type="number" class="form-control" [value]="total.toFixed(2)" id="total" disabled>
                 }
                 @else if (total<60 && total>=30) {
-                    <label for="total" class="col-form-label py-1">Total + 2$ de Delivery:</label>
+                    <label for="total" class="col-form-label py-1 px-4">Total + 2$ de Delivery:</label>
                     <input type="number" class="form-control" [value]="(total+2).toFixed(2)" id="total" disabled>
                 }
                 @else {
-                    <label for="total" class="col-form-label py-1">Total + 4$ de Delivery:</label>
+                    <label for="total" class="col-form-label py-1 px-4">Total + 4$ de Delivery:</label>
                     <input type="number" class="form-control" [value]="(total+4).toFixed(2)" id="total" disabled>
                 }
                 

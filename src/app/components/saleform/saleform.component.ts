@@ -6,11 +6,12 @@ import { SaleService } from '../../services/sale.service';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { Method } from '../../constants/Enum';
+import { OnlynumbersDirective } from '../../onlynumbers.directive';
 
 @Component({
   selector: 'saleform',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, OnlynumbersDirective],
   templateUrl: './saleform.component.html',
   styleUrl: './saleform.component.scss'
 })
