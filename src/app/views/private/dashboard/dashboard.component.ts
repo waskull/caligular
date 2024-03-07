@@ -104,8 +104,8 @@ export class DashboardComponent implements OnInit {
   var myChart2 = new Chart("myChart2", {
     type: 'bar',
     data: {
-        labels: clients.map((e: { firstname: string; }) => {
-          return e?.firstname || undefined
+        labels: clients.map((e: { firstname: string; lastname:string }) => {
+          return `${e?.firstname} ${e?.lastname}` || undefined
         }),
         datasets: [{
             label: '# de ventas por cliente',

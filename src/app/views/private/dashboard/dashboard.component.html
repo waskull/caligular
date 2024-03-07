@@ -2,8 +2,8 @@
 <header class="bg-surface-primary border-bottom pt-6">
     <div class="container-fluid">
         <div class="mb-npx">
-            <div class="row align-items-center">
-                <div class="col-sm-6 col-12 mb-4 mb-sm-0">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-sm-6 col-12  mb-4 mb-sm-0">
                     <!-- <h2 class="text-red">Bienvenido
                         <span class="text-default poppings">{{getUserInfo()}}</span>
                     </h2> -->
@@ -21,16 +21,16 @@
     </div>
 </header>
 <main class="py-6 bg-surface-secondary">
-    <div class="container-fluid mb-lg-2">
+    <div class="container mb-lg-2">
 
-        <div class="row g-6 mb-6  mt-lg-3">
-            <div class="col-xl-3 col-sm-6 col-12">
+        <div class="row g-6 mb-6 mt-lg-3">
+            <div class="col-xl-3 col-sm-6 col-md-6 col-7">
                 <div class="card dark cardCursor text-white shadow border-0">
                     <a style="text-decoration: none;" class="text-white" routerLink="/products">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col"> <span class="h6 font-semibold  text-sm d-block mb-2">Contamos
-                                        con </span> <span class="h4 poppings font-bold mb-0">{{stats?.inventory}} helados</span>
+                                        con </span> <span class="h5 poppings font-bold mb-0">{{stats?.inventory}} helados</span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape dark text-white text-lg rounded-circle"> <i
@@ -45,13 +45,13 @@
                 </div>
             </div>
 
-            <div class="col-xl-3 col-sm-6 col-12">
+            <div class="col-xl-3 col-sm-6 col-md-6 col-7">
                 <div class="card default cardCursor text-white shadow border-0">
                     <a style="text-decoration: none;" class="text-white" routerLink="/users">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col"> <span class="h6 font-semibold  text-sm d-block mb-2">Contamos
-                                        con </span> <span class="h3 poppings font-bold mb-0">{{stats?.users}} clientes</span>
+                                        con </span> <span class="h5 poppings font-bold mb-0">{{stats?.users}} clientes</span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape default text-white text-lg rounded-circle"> <i
@@ -65,13 +65,13 @@
                     </a>
                 </div>
             </div>
-            <div class="col-xl-3 col-sm-6 col-12">
+            <div class="col-xl-3 col-sm-6 col-md-6 col-7">
                 <div class="card red cardCursor text-white shadow border-0">
                     <a style="text-decoration: none;" class="text-white" routerLink="/sales">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col"> <span class="h6 font-semibold  text-sm d-block mb-2">Se han realizado
-                                        </span> <span class="h3 poppings font-bold mb-0">{{stats?.sales}} entregas</span>
+                                        </span> <span class="h5 poppings font-bold mb-0">{{stats?.sales}} entregas</span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape red text-white text-lg rounded-circle"> <i
@@ -85,14 +85,14 @@
                     </a>
                 </div>
             </div>
-            <div class="col-xl-3 col-sm-6 col-12">
+            <div class="col-xl-3 col-sm-6 col-md-6 col-7">
                 <div class="card yellow cardCursor shadow border-0">
                     <a style="text-decoration: none;" class="text-black" routerLink="/sales">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col"> <span class="h6 font-semibold  text-sm d-block mb-2">Hay
                                     </span>
-                                    <span class="h3 poppings font-bold mb-0">{{stats?.incompletes}}
+                                    <span class="h5 poppings font-bold mb-0">{{stats?.incompletes}}
                                         pedidos </span>
                                 </div>
                                 <div class="col-auto">

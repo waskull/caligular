@@ -42,22 +42,21 @@ export class UserComponent implements OnInit {
       
       res.forEach((u) => {
         u.idd = u.id < 10 ? `#0${u.id}` : `#${u.id}`;
-        u.birthdate = `${u.birthdate} (${this.calculateAge(u.birthdate)} años)`
+        u.age = `${u.birthdate} (${this.calculateAge(u.birthdate)} años)`
       });
       this.userData = res;
-      console.log(this.userData);
     });
 
   }
 
   public search: string = '';
   columnNames = ['nombre', 'apellido', 'correo', 'cédula', 'fecha de nacimieto', 'roles', 'teléfono']
-  columns = ['firstname', 'lastname', 'email', 'cedula', 'birthdate', 'roles', 'phone']
+  columns = ['firstname', 'lastname', 'email', 'cedula', 'age', 'roles', 'phone']
   op = { delete: true, edit: true }
 
   editUser(user: any) {
-    console.log("edit ",user);
-    user.birthdate = `${user.birthdate} (${this.calculateAge(user.birthdate)} años)`
+
+    user.age = `${user.birthdate} (${this.calculateAge(user.birthdate)} años)`
     this.loadData();
   }
 
@@ -69,8 +68,9 @@ export class UserComponent implements OnInit {
   }
 
   newValue(user: any) {
-    user.birthdate = `${user.birthdate} (${this.calculateAge(user.birthdate)} años)`
-    this.userData.push(user);
+    user.age = `${user.birthdate} (${this.calculateAge(user.birthdate)} años)`
+    // this.userData.push(user);
+    this.loadData();
   }
 
 }

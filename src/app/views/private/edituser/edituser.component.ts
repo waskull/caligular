@@ -9,12 +9,14 @@ import { DEF_CONF } from '../../../constants/DatePicker';
 // import { DpDatePickerModule } from 'ng2-date-picker';
 import { default as dayjs } from 'dayjs';
 import 'dayjs/locale/es-mx';
+import { validateTypeDate } from '../../../validators/dateValidator';
+import { OnlynumbersDirective } from '../../../onlynumbers.directive';
 dayjs.locale('es-mx');
 
 @Component({
   selector: 'app-edituser',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule,],
+  imports: [ReactiveFormsModule, CommonModule,OnlynumbersDirective],
   templateUrl: './edituser.component.html',
   styleUrl: './edituser.component.scss'
 })
@@ -54,11 +56,11 @@ export class EdituserComponent implements OnInit {
     return this.fb.group({
       firstname: ['', [Validators.required, Validators.minLength(2)]],
       lastname: ['', [Validators.required, Validators.minLength(2)]],
-      cedula: ['', [Validators.required, Validators.min(3)]],
-      birthdate: ['', [Validators.required]],
-      pass: ['', [Validators.required, Validators.minLength(3)]],
-      pass2: ['', [Validators.required, Validators.minLength(3)]],
-      phone: ['', [Validators.minLength(1)]],
+      cedula: ['', [Validators.required, Validators.min(6), Validators.pattern("^[0-9]*$")]],
+      birthdate: ['', [Validators.required, validateTypeDate]],
+      pass: ['', [Validators.required, Validators.minLength(4)]],
+      pass2: ['', [Validators.required, Validators.minLength(4)]],
+      phone: ['', [Validators.required, Validators.minLength(7), Validators.pattern("^[0-9]*$")]],
     },
     );
 

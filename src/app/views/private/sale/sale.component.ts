@@ -44,7 +44,6 @@ export class SaleComponent implements OnInit {
           id: e.id,
           idd: e.id < 10 ? `#0${e.id}` : `#${e.id}`,
           pay_code: e.pay_code,
-          //pay_code: e.paymentMethod==='Efectivo' ? 'Efectivo' : `${e.paymentMethod}: ${e?.pay_code}`,
           items: items,
           price: e.total,
           status: e.status,
@@ -77,5 +76,9 @@ export class SaleComponent implements OnInit {
     this.saleService.completeSale(id,delivery_man_id).subscribe((res) => {
       this.loadData();
     });
+  }
+
+  reload(){
+    this.loadData();
   }
 }
